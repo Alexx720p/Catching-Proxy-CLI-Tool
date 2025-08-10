@@ -13,30 +13,6 @@ origin = os.getenv('ORIGIN_URL', 'https://dummyjson.com')
 def get_cache_key(path):
     return hashlib.sha256(path.encode()).hexdigest()
 
-
-# def proxy_view(request, path=''):
-#     cache_key = f'proxy:{path or "root"}'
-#     response_data = cache.get(cache_key)
-
-#     if response_data is None:
-#         print('Cache miss:', cache_key)
-#         origin_url = f'{origin}/{path}'
-#         response = requests.get(origin_url)
-#         cache.set(cache_key, response_data, timeout=60 * 5)
-
-#         try:
-#             response_data = response.json()
-#             cache.set(cache_key, response_data, timeout=60 * 5)
-#             return JsonResponse(response_data)
-
-#         except ValueError:
-#             print('Invalid JSON from origin:', response.text[:100])
-#             return HttpResponse(response.text, status=response.status_code, content_type=response.headers.get('Content-Type', 'text/plain'))
-
-#     print('Cache hit:', cache_key)
-#     return JsonResponse(response_data)
-
-
 def safe_cache_key(key):
     return re.sub(r'[^a-zA-Z0-9_-]', '_', key)
 
